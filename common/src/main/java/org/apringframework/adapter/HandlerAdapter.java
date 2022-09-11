@@ -22,5 +22,5 @@ public interface HandlerAdapter {
      * @param action An action to handle.
      * @param handler An handler to handle {@param action}
      */
-    void handle(Action action, Handler handler);
+    void handle(Object action, Handler handler);
 }

@@ -3,5 +3,5 @@ package org.apringframework.context;
 /***
  * @author Singlerr
  */
-public interface Context {
+public interface Context extends BeanFactory{
 }

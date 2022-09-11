@@ -5,7 +5,7 @@ import org.apringframework.context.Context;
 /***
  * @author Singlerr
  */
-public interface Action extends Context {
+public interface Action{
     void execute();
 
 }

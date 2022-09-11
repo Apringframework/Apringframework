@@ -3,21 +3,26 @@ package org.apringframework.android;
 import org.apringframework.action.Action;
 import org.apringframework.adapter.HandlerAdapter;
 import org.apringframework.context.Context;
-import org.apringframework.dispatcher.ActionDispatcher;
+import org.apringframework.dispatcher.ApplicationDispatcher;
 import org.apringframework.handler.Handler;
 import org.apringframework.handler.HandlerMapping;
 
 import java.util.List;
 
 /***
- * {@link ActionDispatcher} implementation class for android.
+ * {@link ApplicationDispatcher} implementation class for android.
  * @author Singlerr
  */
-final class AndroidActionDispatcher implements ActionDispatcher {
+final class AndroidApplicationDispatcher implements ApplicationDispatcher {
 
     private List<HandlerMapping> handlerMappings;
 
     private List<HandlerAdapter> handlerAdapters;
+
+
+    public AndroidApplicationDispatcher(){
+
+    }
 
     /***
      * Find a handler adapter for {@param handler}
@@ -35,18 +40,18 @@ final class AndroidActionDispatcher implements ActionDispatcher {
      * @return {@link HandlerAdapter} for {@param action}
      */
     @Override
-    public Handler getHandler(Action action) {
+    public Handler getHandler(Object action) {
         return null;
     }
 
     /***
      * Dispatch action.
-     * {@link ActionDispatcher#getHandlerAdapter(Handler)} to get action handler.
+     * {@link ApplicationDispatcher#getHandlerAdapter(Handler)} to get action handler.
      * @param context Context of application.
      * @param action Action to dispatch.
      */
     @Override
-    public void dispatch(Context context, Action action) {
+    public void dispatch(Context context, Object action) {
 
     }
 }

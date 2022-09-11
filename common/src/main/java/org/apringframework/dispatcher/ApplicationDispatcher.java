@@ -9,7 +9,7 @@ import org.apringframework.handler.Handler;
 /***
  * @author Singlerr
  */
-public interface ActionDispatcher {
+public interface ApplicationDispatcher {
 
     /***
      * Find a handler adapter for {@param handler}
@@ -23,13 +23,13 @@ public interface ActionDispatcher {
      * @param action An action to find suitable handler for.
      * @return {@link HandlerAdapter} for {@param action}
      */
-    Handler getHandler(Action action);
+    Handler getHandler(Object action);
     /***
      * Dispatch action.
-     * {@link ActionDispatcher#getHandlerAdapter(Handler)} to get action handler.
+     * {@link ApplicationDispatcher#getHandlerAdapter(Handler)} to get action handler.
      * @param context Context of application.
      * @param action Action to dispatch.
      */
-    void dispatch(Context context, Action action);
+    void dispatch(Context context, Object action);
 
 }

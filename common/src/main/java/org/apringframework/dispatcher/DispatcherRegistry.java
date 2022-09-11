@@ -12,14 +12,14 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class DispatcherRegistry {
-    private static ActionDispatcher dispatcher;
+    private static ApplicationDispatcher dispatcher;
 
     /***
      * Get current action dispatcher in thread.
      * @return current action dispatcher
      */
     @Nullable
-    public static ActionDispatcher getDispatcher() {
+    public static ApplicationDispatcher getDispatcher() {
         return dispatcher;
     }
 
@@ -27,7 +27,7 @@ public final class DispatcherRegistry {
      * Set action dispatcher
      * @param dispatcher action dispatcher
      */
-    public static void setDispatcher(ActionDispatcher dispatcher) {
+    public static void setDispatcher(ApplicationDispatcher dispatcher) {
         DispatcherRegistry.dispatcher = dispatcher;
     }
 }
