@@ -3,6 +3,7 @@ package org.apringframework.adapter;
 import org.apringframework.action.Action;
 import org.apringframework.context.Context;
 import org.apringframework.handler.Handler;
+import org.apringframework.model.ModelOrView;
 
 import lombok.NonNull;
 
@@ -21,6 +22,7 @@ public interface HandlerAdapter {
      * Handle {@param action} with handler {@param handler}
      * @param action An action to handle.
      * @param handler An handler to handle {@param action}
+     * @return model or view {@link ModelOrView}
      */
-    void handle(Object action, Handler handler);
+    ModelOrView handle(Object action, Handler handler);
 }
