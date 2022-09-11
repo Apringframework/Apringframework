@@ -35,4 +35,9 @@ public final class UnnamedBeanHolder<T> implements BeanHolder<T> {
     public boolean isBeanAvailable() {
         return beanInstance != null;
     }
+
+    @Override
+    public Class<T> getBeanClass() {
+        return (Class<T>) beanInstance.getClass();
+    }
 }

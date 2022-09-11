@@ -48,4 +48,8 @@ public final class NamedBeanHolder<T> implements BeanHolder<T> {
         return beanInstance != null;
     }
 
+    @Override
+    public Class<T> getBeanClass() {
+        return (Class<T>) beanInstance.getClass();
+    }
 }

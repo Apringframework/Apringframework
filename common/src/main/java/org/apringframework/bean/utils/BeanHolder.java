@@ -17,4 +17,10 @@ public interface BeanHolder<T> {
      * @return availability of bean
      */
     boolean isBeanAvailable();
+
+    /***
+     * Get class of bean
+     * @return class of bean
+     */
+    Class<T> getBeanClass();
 }

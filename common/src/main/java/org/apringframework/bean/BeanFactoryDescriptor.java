@@ -17,4 +17,9 @@ public interface BeanFactoryDescriptor {
      */
     List<BeanMethodDescriptor> getBeanMethodDescriptors();
 
+    /***
+     * Get class of bean factory
+     * @return class of bean factory
+     */
+    Class<?> getBeanFactoryClass();
 }

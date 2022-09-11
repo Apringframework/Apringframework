@@ -39,4 +39,15 @@ public final class DefaultBeanFactoryDescriptor implements BeanFactoryDescriptor
         }
         return Collections.unmodifiableList(descriptors);
     }
+
+    /***
+     * Get class of bean factory
+     * @return class of bean factory
+     */
+    @Override
+    public Class<?> getBeanFactoryClass() {
+        return factoryClass;
+    }
+
+
 }

@@ -11,4 +11,18 @@ public final class ReflectionUtils {
         method.setAccessible(true);
         return method.getParameterTypes();
     }
+
+    public static Method getMethod(Class<?> containingClass, String name, Class<?> returnType, Class<?>[] parameterTypes){
+        Method method = null;
+        for (Method declaredMethod : containingClass.getDeclaredMethods()) {
+            if(declaredMethod.getName().equals(name) && declaredMethod.getReturnType().equals(returnType)){
+                for (int i = 0; i < declaredMethod.getParameterTypes().length; i++) {
+                    if(! parameterTypes[i].equals(declaredMethod.getParameterTypes()[i]))
+                        return null;
+                    method = declaredMethod;
+                }
+            }
+        }
+        return method;
+    }
 }
