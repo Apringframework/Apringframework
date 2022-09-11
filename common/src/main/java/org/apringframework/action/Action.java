@@ -7,4 +7,5 @@ import org.apringframework.context.Context;
  */
 public interface Action extends Context {
     void execute();
+
 }

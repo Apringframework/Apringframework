@@ -2,6 +2,7 @@ package org.apringframework.android;
 
 import android.os.Bundle;
 
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,6 +22,7 @@ public abstract class AndroidApplication extends AppCompatActivity implements Ap
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         onApplicationStart();
+
     }
 
     @Override

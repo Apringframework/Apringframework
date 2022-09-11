@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 rootProject.name = "Apring"
 include ":android"
 include ":common"
+include ":annotation-detector"
