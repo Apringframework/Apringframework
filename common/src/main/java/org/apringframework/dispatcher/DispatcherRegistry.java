@@ -1,6 +1,5 @@
 package org.apringframework.dispatcher;
 
-import com.sun.istack.internal.Nullable;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -18,7 +17,6 @@ public final class DispatcherRegistry {
      * Get current action dispatcher in thread.
      * @return current action dispatcher
      */
-    @Nullable
     public static ApplicationDispatcher getDispatcher() {
         return dispatcher;
     }

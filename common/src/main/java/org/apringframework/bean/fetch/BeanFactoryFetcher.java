@@ -1,8 +1,9 @@
 package org.apringframework.bean.fetch;
 
-import com.sun.istack.internal.Nullable;
+
 
 import java.util.List;
+import java.util.Set;
 
 /***
  * Defining basic architecture of bean factory fetcher.
@@ -13,8 +14,7 @@ public interface BeanFactoryFetcher {
 
     /***
      * Get bean factory classes annotated with {@link org.apringframework.bean.BeanFactory}
-     * @return list of bean factory classes.
+     * @return set of bean factory classes.
      */
-    @Nullable
-    List<Class<?>> getBeanFactories();
+    Set<Class<?>> getBeanFactories();
 }

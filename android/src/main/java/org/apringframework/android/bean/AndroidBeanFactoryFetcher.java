@@ -6,6 +6,7 @@ import org.apringframework.utils.AnnotationUtils;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 /***
  * Implementation class of {@link org.apringframework.bean.fetch.BeanFactoryFetcher} to fetch classes annotated with {@link org.apringframework.bean.BeanFactory}
@@ -17,7 +18,8 @@ public final class AndroidBeanFactoryFetcher implements BeanFactoryFetcher {
      * @return list of bean factory classes.
      */
     @Override
-    public List<Class<?>> getBeanFactories() {
+    public Set<Class<?>> getBeanFactories() {
+
         try {
             return AnnotationUtils.findClassesWith(BeanFactory.class);
         } catch (IOException e) {

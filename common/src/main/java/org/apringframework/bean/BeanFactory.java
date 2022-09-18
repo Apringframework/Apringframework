@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
  * Annotated to bean factory class, which is to create beans.
  * @author Singlerr
  */
-@Target(ElementType.TYPE_USE)
+@Target({ElementType.TYPE,ElementType.TYPE_USE})
 public @interface BeanFactory {
 }
