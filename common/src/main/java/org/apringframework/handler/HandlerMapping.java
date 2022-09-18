@@ -15,5 +15,5 @@ public interface HandlerMapping {
      * @return {@link Handler} handler of context.
      */
     @NonNull
-    Handler getHandler(Context context);
+    Handler getHandler(Context context,Object action);
 }

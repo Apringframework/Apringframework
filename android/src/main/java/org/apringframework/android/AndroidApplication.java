@@ -19,7 +19,7 @@ public abstract class AndroidApplication extends AppCompatActivity implements Ap
      * DO NOT OVERRIDE THIS METHOD!
      */
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected final void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         onApplicationStart();
 

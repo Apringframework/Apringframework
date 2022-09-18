@@ -2,6 +2,7 @@ package org.apringframework.android;
 
 import org.apringframework.action.Action;
 import org.apringframework.adapter.HandlerAdapter;
+import org.apringframework.android.context.AndroidApplicationContext;
 import org.apringframework.context.Context;
 import org.apringframework.dispatcher.ApplicationDispatcher;
 import org.apringframework.handler.Handler;
@@ -19,9 +20,10 @@ final class AndroidApplicationDispatcher implements ApplicationDispatcher {
 
     private List<HandlerAdapter> handlerAdapters;
 
+    private AndroidApplicationContext context;
 
-    public AndroidApplicationDispatcher(){
-
+    public AndroidApplicationDispatcher(AndroidApplicationContext context){
+        this.context = context;
     }
 
     /***

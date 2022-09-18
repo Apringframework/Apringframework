@@ -19,7 +19,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public final class DefaultApplicationContext implements Context {
+/***
+ * Simple implementation class of {@link Context}
+ */
+public class DefaultApplicationContext implements Context {
 
 
     private List<BeanFactoryDescriptor> factoryDescriptors;

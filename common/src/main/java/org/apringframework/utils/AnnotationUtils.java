@@ -15,13 +15,13 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class AnnotationUtils {
-    public static List<Class<?>> findClassesWith(Class<Annotation> annotationClass) throws IOException {
+    public static List<Class<?>> findClassesWith(Class<? extends Annotation> annotationClass) throws IOException {
         return AnnotationDetector.scanClassPath()
                 .forAnnotations(annotationClass)
                 .collect(Cursor::getType);
     }
 
-    public static List<Method> findMethodsWith(Class<?> cls, Class<Annotation> annotationClass) throws IOException {
+    public static List<Method> findMethodsWith(Class<?> cls, Class<? extends Annotation> annotationClass) throws IOException {
         return AnnotationDetector.scanClassPath(cls.getPackage().getName())
                 .forAnnotations(annotationClass)
                 .on(ElementType.METHOD)

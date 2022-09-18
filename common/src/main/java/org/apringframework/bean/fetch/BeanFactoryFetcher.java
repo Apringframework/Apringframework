@@ -1,5 +1,7 @@
 package org.apringframework.bean.fetch;
 
+import com.sun.istack.internal.Nullable;
+
 import java.util.List;
 
 /***
@@ -13,5 +15,6 @@ public interface BeanFactoryFetcher {
      * Get bean factory classes annotated with {@link org.apringframework.bean.BeanFactory}
      * @return list of bean factory classes.
      */
+    @Nullable
     List<Class<?>> getBeanFactories();
 }
