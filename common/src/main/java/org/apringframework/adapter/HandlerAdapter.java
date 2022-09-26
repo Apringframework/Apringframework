@@ -20,9 +20,10 @@ public interface HandlerAdapter {
 
     /***
      * Handle {@param action} with handler {@param handler}
+     * @param context current context
      * @param action An action to handle.
      * @param handler An handler to handle {@param action}
      * @return model or view {@link ModelOrView}
      */
-    ModelOrView handle(Object action, Handler handler);
+    ModelOrView handle(Context context, Object action, Handler handler);
 }

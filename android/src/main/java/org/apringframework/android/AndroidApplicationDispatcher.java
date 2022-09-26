@@ -99,7 +99,7 @@ final class AndroidApplicationDispatcher implements ApplicationDispatcher {
             throw new IllegalStateException("Cannot find suitable handler adapter for " + action);
 
         if(handler.handle(context,action)){
-            ModelOrView model = adapter.handle(action,handler);
+            ModelOrView model = adapter.handle(context, action,handler);
 
         }
     }

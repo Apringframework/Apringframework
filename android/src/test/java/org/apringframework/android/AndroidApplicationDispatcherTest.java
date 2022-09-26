@@ -12,6 +12,6 @@ public class AndroidApplicationDispatcherTest extends TestCase {
     public void testActivityBeanFactory(){
         AndroidApplicationContext ctx = new AndroidApplicationContext(null);
         AndroidApplicationDispatcher dispatcher = new AndroidApplicationDispatcher(ctx);
-
+        System.out.println();
     }
 }

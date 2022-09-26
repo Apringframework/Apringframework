@@ -1,6 +1,15 @@
 package org.apringframework.android.handler.adapters.activity;
 
+import android.app.Activity;
+import android.content.Intent;
+
 import org.apringframework.adapter.HandlerAdapter;
+import org.apringframework.android.action.activities.ActivityRequestAction;
+import org.apringframework.android.context.AndroidApplicationContext;
+import org.apringframework.android.handler.handlers.activity.ActivityHandler;
+import org.apringframework.android.impl.activity.ImplAppCompatActivity;
+import org.apringframework.android.utils.BundleBuilder;
+import org.apringframework.context.Context;
 import org.apringframework.handler.Handler;
 import org.apringframework.model.ModelOrView;
 
@@ -12,7 +21,7 @@ public class ActivityHandlerAdapter implements HandlerAdapter {
      */
     @Override
     public boolean support(Handler handler) {
-        return false;
+        return handler instanceof ActivityHandler;
     }
 
     /***
@@ -22,7 +31,24 @@ public class ActivityHandlerAdapter implements HandlerAdapter {
      * @return model or view {@link ModelOrView}
      */
     @Override
-    public ModelOrView handle(Object action, Handler handler) {
+    public ModelOrView handle(Context context, Object action, Handler handler) {
+        AndroidApplicationContext appContext = (AndroidApplicationContext) context;
+        if (action instanceof ActivityRequestAction) {
+            ActivityRequestAction reqAction = (ActivityRequestAction) action;
+
+            Activity contextActivity = appContext.getActivity();
+
+            Intent intent = new Intent(contextActivity, ImplAppCompatActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            intent.putExtras(new BundleBuilder()
+                    .withInteger(ImplAppCompatActivity.KEY_ACTIVITY_LAYOUT, reqAction.getActivityLayout())
+                    .withSerializable(ImplAppCompatActivity.KEY_CONTEXT, appContext)
+                    .build());
+
+            contextActivity.getApplication().startActivity(intent);
+        }
+
         return null;
     }
 }

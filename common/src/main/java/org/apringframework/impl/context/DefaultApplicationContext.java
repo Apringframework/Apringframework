@@ -8,7 +8,7 @@ import org.apringframework.bean.utils.BeanMethodDescriptor;
 import org.apringframework.bean.utils.holders.NamedBeanHolder;
 import org.apringframework.context.Context;
 import org.apringframework.impl.bean.DefaultBeanFactoryDescriptor;
-import org.apringframework.utils.ReflectionUtils;
+import org.springframework.utilities.ReflectionUtils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -71,9 +71,10 @@ public class DefaultApplicationContext implements Context {
      */
     @Override
     public <T> Set<T> getBeans(Class<T> beanClass) {
+        updateBeans();
         Set<T> beans = new HashSet<>();
         for (BeanHolder<?> beanHolder : beanHolders) {
-            if (!beanHolder.getBeanClass().equals(beanClass) || !beanHolder.isBeanAvailable())
+            if (!beanClass.isAssignableFrom(beanHolder.getBeanClass()) || !beanHolder.isBeanAvailable())
                 continue;
             beans.add((T) beanHolder.getBean());
         }

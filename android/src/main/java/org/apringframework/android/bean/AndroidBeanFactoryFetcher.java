@@ -5,7 +5,7 @@ import org.apringframework.bean.fetch.BeanFactoryFetcher;
 import org.apringframework.utils.AnnotationUtils;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 /***
@@ -21,7 +21,7 @@ public final class AndroidBeanFactoryFetcher implements BeanFactoryFetcher {
     public Set<Class<?>> getBeanFactories() {
 
         try {
-            return AnnotationUtils.findClassesWith(BeanFactory.class);
+            return new HashSet<>(AnnotationUtils.findClassesWith(BeanFactory.class));
         } catch (IOException e) {
             return null;
         }

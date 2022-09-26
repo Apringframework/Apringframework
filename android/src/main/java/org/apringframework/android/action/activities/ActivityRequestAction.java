@@ -5,6 +5,8 @@ import android.app.Activity;
 import org.apringframework.android.action.ActivityAction;
 
 import kotlin.NotImplementedError;
+import lombok.Getter;
+import lombok.Setter;
 
 /***
  * Action of requesting activity to start
@@ -13,21 +15,34 @@ import kotlin.NotImplementedError;
  */
 public final class ActivityRequestAction extends ActivityAction {
 
-    public ActivityRequestAction(Activity activity){
-        super(activity);
+    public ActivityRequestAction(){
+        super(null);
     }
 
+    @Getter
     private String activityName;
 
+    @Getter
     private int activityLayout;
 
     @Override
-    public void execute() {
+    public Activity getActivity() {
+        throw new IllegalStateException("Unsupported action!");
     }
 
+    public static final class Builder{
+        private ActivityRequestAction instance;
 
-
-    public static class Builder{
-
+        public Builder activityName(String activityName){
+            instance.activityName = activityName;
+            return this;
+        }
+        public Builder activityLayout(int activityLayout){
+            instance.activityLayout = activityLayout;
+            return this;
+        }
+        public ActivityRequestAction build(){
+            return instance;
+        }
     }
 }

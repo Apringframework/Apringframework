@@ -17,7 +17,6 @@ public class ActivityHandlerMapping implements HandlerMapping {
     public Handler getHandler(Context context, Object action) {
         if(! (action instanceof ActivityAction))
             return null;
-
         return new ActivityHandler();
     }
 }

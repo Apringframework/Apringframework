@@ -1,6 +1,10 @@
-package org.apringframework.utils;
+package org.springframework.utilities;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -19,10 +23,19 @@ public final class ReflectionUtils {
                 for (int i = 0; i < declaredMethod.getParameterTypes().length; i++) {
                     if(! parameterTypes[i].equals(declaredMethod.getParameterTypes()[i]))
                         return null;
-                    method = declaredMethod;
                 }
+                method = declaredMethod;
             }
         }
         return method;
     }
+
+    public static List<Method> flattenMethodsWith(Class<?>[] classes, Class<? extends Annotation> annotationClass){
+        ArrayList<Method> flattened = new ArrayList<>();
+        for (Class<?> cls : classes) {
+            flattened.addAll(AnnotationUtils.findMethodsWith(cls, annotationClass));
+        }
+        return Collections.unmodifiableList(flattened);
+    }
+
 }
