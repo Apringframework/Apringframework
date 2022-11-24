@@ -13,16 +13,32 @@ import java.util.List;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class AnnotationUtils {
+@UtilityClass
+public class AnnotationUtils {
 
-    public static List<Class<?>> findClassesWith(Class<? extends Annotation> annotationClass) throws IOException {
-        ArrayList<Class<?>> classes = new ArrayList<>();
-
+    /***
+     * Find classes with specific annotation in class loader of current thread
+     * @param annotationClass annotation annotated to class to find
+     * @return classes annotated
+     * @throws IOException
+     */
+    public List<Class<?>> findClassesWith(Class<? extends Annotation> annotationClass) throws IOException {
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        ImmutableSet<ClassPath.ClassInfo> loadedClasses = ClassPath.from(loader).getAllClasses();
+        return findClassesWith(loader,annotationClass);
+    }
 
+    /***
+     * Find classes with specific annotation in specific class loader
+     * @param classLoader class loader to look up
+     * @param annotationClass annotation annotated to class to find
+     * @return unmodifiable list of classes annotated
+     * @throws IOException
+     */
+    public List<Class<?>> findClassesWith(ClassLoader classLoader, Class<? extends Annotation> annotationClass) throws IOException{
+        ArrayList<Class<?>> classes = new ArrayList<>();
+        ImmutableSet<ClassPath.ClassInfo> loadedClasses = ClassPath.from(classLoader).getAllClasses();
         for (ClassPath.ClassInfo loadedClass : loadedClasses) {
             if (loadedClass.getName().contains("module-info"))
                 continue;
@@ -30,10 +46,16 @@ public final class AnnotationUtils {
             if (cls.isAnnotationPresent(annotationClass))
                 classes.add(cls);
         }
-
         return Collections.unmodifiableList(classes);
     }
-    public static List<Method> findMethodsWith(Class<?> containingClass, Class<? extends Annotation> annotationClass){
+
+    /***
+     * Find methods which annotated with specific annotation in specific class
+     * @param containingClass class to find methods
+     * @param annotationClass annotation annotated to method
+     * @return unmodifiable list of methods annotated
+     */
+    public List<Method> findMethodsWith(Class<?> containingClass, Class<? extends Annotation> annotationClass){
         Method[] methods = containingClass.getDeclaredMethods();
         ArrayList<Method> foundMethods = new ArrayList<>();
         for (Method method : methods) {
@@ -42,7 +64,14 @@ public final class AnnotationUtils {
         }
         return Collections.unmodifiableList(foundMethods);
     }
-    public static List<Field> findFieldsWith(Class<?> containingClass, Class<? extends Annotation> annotationClass){
+
+    /***
+     * Find fields which annotated with specific annotation in specific class
+     * @param containingClass class to find fields
+     * @param annotationClass annotation annotated to field
+     * @return unmodifiable list of fields annotated
+     */
+    public List<Field> findFieldsWith(Class<?> containingClass, Class<? extends Annotation> annotationClass){
         Field[] fields = containingClass.getDeclaredFields();
         ArrayList<Field> foundFields = new ArrayList<>();
         for (Field field : fields) {
