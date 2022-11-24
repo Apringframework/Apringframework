@@ -11,6 +11,9 @@ import org.apringframework.model.ModelOrView;
  * @author Singlerr
  */
 public abstract class ActivityAction implements Action, ModelOrView {
+
+    protected String name;
+
     private Activity activity;
 
     /***
@@ -18,8 +21,9 @@ public abstract class ActivityAction implements Action, ModelOrView {
      * {@link ActivityAction} must have activity.
      * @param activity
      */
-    public ActivityAction(Activity activity){
+    public ActivityAction(String name, Activity activity){
         this.activity = activity;
+        this.name = name;
     }
 
     /***
@@ -28,5 +32,9 @@ public abstract class ActivityAction implements Action, ModelOrView {
      */
     public Activity getActivity() {
         return activity;
+    }
+
+    public String getName() {
+        return name;
     }
 }

@@ -1,6 +1,6 @@
 package org.apringframework.android.bean.factories.activity;
 
-import org.apringframework.android.handler.handlers.activity.ActivityHandler;
+import org.apringframework.android.handler.handlers.activity.UniversalActivityHandler;
 import org.apringframework.bean.Bean;
 import org.apringframework.bean.BeanFactory;
 import org.apringframework.handler.Handler;
@@ -18,6 +18,6 @@ public class ActivityHandlerBeanFactory {
      */
     @Bean
     public Handler activityHandler(){
-        return new ActivityHandler();
+        return new UniversalActivityHandler();
     }
 }

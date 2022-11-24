@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.apringframework.android.context.AndroidApplicationContext;
+import org.apringframework.android.events.activity.ActivityStartEvent;
 
 /***
  * Dummy implementation class of {@link androidx.appcompat.app.AppCompatActivity}
@@ -28,6 +29,13 @@ public final class ImplAppCompatActivity extends AppCompatActivity {
 
         AndroidApplicationContext context = (AndroidApplicationContext) dataBundle.getSerializable(KEY_CONTEXT);
         context.setActivity(this);
+
+        ActivityStartEvent event = new ActivityStartEvent(context,this);
+
+        context.getEventBus().fireEvent(event);
+
+        if(event.isCancelled())
+            finish();
 
         setContentView(activityLayout);
 

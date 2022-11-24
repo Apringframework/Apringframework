@@ -15,12 +15,9 @@ import lombok.Setter;
  */
 public final class ActivityRequestAction extends ActivityAction {
 
-    public ActivityRequestAction(){
-        super(null);
+    public ActivityRequestAction(String name){
+        super(name, null);
     }
-
-    @Getter
-    private String activityName;
 
     @Getter
     private int activityLayout;
@@ -34,7 +31,7 @@ public final class ActivityRequestAction extends ActivityAction {
         private ActivityRequestAction instance;
 
         public Builder activityName(String activityName){
-            instance.activityName = activityName;
+            instance.name = activityName;
             return this;
         }
         public Builder activityLayout(int activityLayout){

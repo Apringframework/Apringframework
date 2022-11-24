@@ -10,13 +10,12 @@ import org.apringframework.android.action.ActivityAction;
  * @author Singlerr
  */
 public final class ActivityInitializationAction extends ActivityAction {
-
     /***
      * Initialize action with activity.
      * {@link ActivityAction} must have activity.
      * @param activity
      */
-    public ActivityInitializationAction(Activity activity) {
-        super(activity);
+    public ActivityInitializationAction(String name, Activity activity) {
+        super(name, activity);
     }
 }

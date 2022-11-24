@@ -19,7 +19,7 @@ import java.util.Set;
  * {@link ApplicationDispatcher} implementation class for android.
  * @author Singlerr
  */
-final class AndroidApplicationDispatcher implements ApplicationDispatcher {
+public final class AndroidApplicationDispatcher implements ApplicationDispatcher {
 
     private List<HandlerMapping> handlerMappings;
 

@@ -1,7 +1,7 @@
 package org.apringframework.android.bean.factories.activity;
 
 import org.apringframework.adapter.HandlerAdapter;
-import org.apringframework.android.handler.adapters.activity.ActivityHandlerAdapter;
+import org.apringframework.android.handler.adapters.activity.UniversalActivityHandlerAdapter;
 import org.apringframework.bean.Bean;
 import org.apringframework.bean.BeanFactory;
 
@@ -17,6 +17,6 @@ public class ActivityHandlerAdapterBeanFactory {
      */
     @Bean
     public HandlerAdapter activityHandlerAdapter(){
-        return new ActivityHandlerAdapter();
+        return new UniversalActivityHandlerAdapter();
     }
 }

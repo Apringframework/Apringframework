@@ -15,7 +15,8 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Apring"
 include ":android"
-include ":common"
+include ':core'
 include ":annotation-detector"
 include ':android-eventbus'
 include ':utilities'
+include ':beans'

@@ -9,10 +9,6 @@ import org.apringframework.eventbus.listener.Listener;
  */
 public interface EventBus {
 
-    static EventBus getInstance(){
-        return new CachedEventBus();
-    }
-
     /***
      * Fire event.
      * Notify all event listeners listening {@link Event}
