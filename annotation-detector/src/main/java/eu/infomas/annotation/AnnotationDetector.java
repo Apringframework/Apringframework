@@ -1,24 +1,207 @@
-/* AnnotationDetector.java
- *
- * Created: 2011-10-10 (Year-Month-Day)
- * Character encoding: UTF-8
- *
- ****************************************** LICENSE *******************************************
- *
- * Copyright (c) 2011 - 2014 XIAM Solutions B.V. (http://www.xiam.nl)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+/*
+
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+   1. Definitions.
+
+      "License" shall mean the terms and conditions for use, reproduction,
+      and distribution as defined by Sections 1 through 9 of this document.
+
+      "Licensor" shall mean the copyright owner or entity authorized by
+      the copyright owner that is granting the License.
+
+      "Legal Entity" shall mean the union of the acting entity and all
+      other entities that control, are controlled by, or are under common
+      control with that entity. For the purposes of this definition,
+      "control" means (i) the power, direct or indirect, to cause the
+      direction or management of such entity, whether by contract or
+      otherwise, or (ii) ownership of fifty percent (50%) or more of the
+      outstanding shares, or (iii) beneficial ownership of such entity.
+
+      "You" (or "Your") shall mean an individual or Legal Entity
+      exercising permissions granted by this License.
+
+      "Source" form shall mean the preferred form for making modifications,
+      including but not limited to software source code, documentation
+      source, and configuration files.
+
+      "Object" form shall mean any form resulting from mechanical
+      transformation or translation of a Source form, including but
+      not limited to compiled object code, generated documentation,
+      and conversions to other media types.
+
+      "Work" shall mean the work of authorship, whether in Source or
+      Object form, made available under the License, as indicated by a
+      copyright notice that is included in or attached to the work
+      (an example is provided in the Appendix below).
+
+      "Derivative Works" shall mean any work, whether in Source or Object
+      form, that is based on (or derived from) the Work and for which the
+      editorial revisions, annotations, elaborations, or other modifications
+      represent, as a whole, an original work of authorship. For the purposes
+      of this License, Derivative Works shall not include works that remain
+      separable from, or merely link (or bind by name) to the interfaces of,
+      the Work and Derivative Works thereof.
+
+      "Contribution" shall mean any work of authorship, including
+      the original version of the Work and any modifications or additions
+      to that Work or Derivative Works thereof, that is intentionally
+      submitted to Licensor for inclusion in the Work by the copyright owner
+      or by an individual or Legal Entity authorized to submit on behalf of
+      the copyright owner. For the purposes of this definition, "submitted"
+      means any form of electronic, verbal, or written communication sent
+      to the Licensor or its representatives, including but not limited to
+      communication on electronic mailing lists, source code control systems,
+      and issue tracking systems that are managed by, or on behalf of, the
+      Licensor for the purpose of discussing and improving the Work, but
+      excluding communication that is conspicuously marked or otherwise
+      designated in writing by the copyright owner as "Not a Contribution."
+
+      "Contributor" shall mean Licensor and any individual or Legal Entity
+      on behalf of whom a Contribution has been received by Licensor and
+      subsequently incorporated within the Work.
+
+   2. Grant of Copyright License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      copyright license to reproduce, prepare Derivative Works of,
+      publicly display, publicly perform, sublicense, and distribute the
+      Work and such Derivative Works in Source or Object form.
+
+   3. Grant of Patent License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      (except as stated in this section) patent license to make, have made,
+      use, offer to sell, sell, import, and otherwise transfer the Work,
+      where such license applies only to those patent claims licensable
+      by such Contributor that are necessarily infringed by their
+      Contribution(s) alone or by combination of their Contribution(s)
+      with the Work to which such Contribution(s) was submitted. If You
+      institute patent litigation against any entity (including a
+      cross-claim or counterclaim in a lawsuit) alleging that the Work
+      or a Contribution incorporated within the Work constitutes direct
+      or contributory patent infringement, then any patent licenses
+      granted to You under this License for that Work shall terminate
+      as of the date such litigation is filed.
+
+   4. Redistribution. You may reproduce and distribute copies of the
+      Work or Derivative Works thereof in any medium, with or without
+      modifications, and in Source or Object form, provided that You
+      meet the following conditions:
+
+      (a) You must give any other recipients of the Work or
+          Derivative Works a copy of this License; and
+
+      (b) You must cause any modified files to carry prominent notices
+          stating that You changed the files; and
+
+      (c) You must retain, in the Source form of any Derivative Works
+          that You distribute, all copyright, patent, trademark, and
+          attribution notices from the Source form of the Work,
+          excluding those notices that do not pertain to any part of
+          the Derivative Works; and
+
+      (d) If the Work includes a "NOTICE" text file as part of its
+          distribution, then any Derivative Works that You distribute must
+          include a readable copy of the attribution notices contained
+          within such NOTICE file, excluding those notices that do not
+          pertain to any part of the Derivative Works, in at least one
+          of the following places: within a NOTICE text file distributed
+          as part of the Derivative Works; within the Source form or
+          documentation, if provided along with the Derivative Works; or,
+          within a display generated by the Derivative Works, if and
+          wherever such third-party notices normally appear. The contents
+          of the NOTICE file are for informational purposes only and
+          do not modify the License. You may add Your own attribution
+          notices within Derivative Works that You distribute, alongside
+          or as an addendum to the NOTICE text from the Work, provided
+          that such additional attribution notices cannot be construed
+          as modifying the License.
+
+      You may add Your own copyright statement to Your modifications and
+      may provide additional or different license terms and conditions
+      for use, reproduction, or distribution of Your modifications, or
+      for any such Derivative Works as a whole, provided Your use,
+      reproduction, and distribution of the Work otherwise complies with
+      the conditions stated in this License.
+
+   5. Submission of Contributions. Unless You explicitly state otherwise,
+      any Contribution intentionally submitted for inclusion in the Work
+      by You to the Licensor shall be under the terms and conditions of
+      this License, without any additional terms or conditions.
+      Notwithstanding the above, nothing herein shall supersede or modify
+      the terms of any separate license agreement you may have executed
+      with Licensor regarding such Contributions.
+
+   6. Trademarks. This License does not grant permission to use the trade
+      names, trademarks, service marks, or product names of the Licensor,
+      except as required for reasonable and customary use in describing the
+      origin of the Work and reproducing the content of the NOTICE file.
+
+   7. Disclaimer of Warranty. Unless required by applicable law or
+      agreed to in writing, Licensor provides the Work (and each
+      Contributor provides its Contributions) on an "AS IS" BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+      implied, including, without limitation, any warranties or conditions
+      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+      PARTICULAR PURPOSE. You are solely responsible for determining the
+      appropriateness of using or redistributing the Work and assume any
+      risks associated with Your exercise of permissions under this License.
+
+   8. Limitation of Liability. In no event and under no legal theory,
+      whether in tort (including negligence), contract, or otherwise,
+      unless required by applicable law (such as deliberate and grossly
+      negligent acts) or agreed to in writing, shall any Contributor be
+      liable to You for damages, including any direct, indirect, special,
+      incidental, or consequential damages of any character arising as a
+      result of this License or out of the use or inability to use the
+      Work (including but not limited to damages for loss of goodwill,
+      work stoppage, computer failure or malfunction, or any and all
+      other commercial damages or losses), even if such Contributor
+      has been advised of the possibility of such damages.
+
+   9. Accepting Warranty or Additional Liability. While redistributing
+      the Work or Derivative Works thereof, You may choose to offer,
+      and charge a fee for, acceptance of support, warranty, indemnity,
+      or other liability obligations and/or rights consistent with this
+      License. However, in accepting such obligations, You may act only
+      on Your own behalf and on Your sole responsibility, not on behalf
+      of any other Contributor, and only if You agree to indemnify,
+      defend, and hold each Contributor harmless for any liability
+      incurred by, or claims asserted against, such Contributor by reason
+      of your accepting any such warranty or additional liability.
+
+   END OF TERMS AND CONDITIONS
+
+   APPENDIX: How to apply the Apache License to your work.
+
+      To apply the Apache License to your work, attach the following
+      boilerplate notice, with the fields enclosed by brackets "[]"
+      replaced with your own identifying information. (Don't include
+      the brackets!)  The text should be enclosed in the appropriate
+      comment syntax for the file format. We also recommend that a
+      file or class name and description of purpose be included on the
+      same "printed page" as the copyright notice for easier
+      identification within third-party archives.
+
+   Copyright [yyyy] [name of copyright owner]
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
 package eu.infomas.annotation;
 
 import java.io.DataInput;
@@ -190,8 +373,10 @@ public final class AnnotationDetector implements Builder, Cursor {
         if (filesOrDirectories.length == 0) {
             LOG.warning("No files or directories to scan!");
         } else if (LOG.isLoggable(Level.FINE)) {
-            LOG.log(Level.FINE, "Files and root directories scanned:\n{0}",
-                Arrays.toString(filesOrDirectories).replace(", ", "\n"));
+            LOG.log(
+                    Level.FINE,
+                    "Files and root directories scanned:\n{0}",
+                    Arrays.toString(filesOrDirectories).replace(", ", "\n"));
         }
     }
 
@@ -200,8 +385,7 @@ public final class AnnotationDetector implements Builder, Cursor {
      * Only scan Class Files in the specified packages. If nothing is specified, all classes
      * on the class path are scanned.
      */
-    public static Builder scanClassPath(final String... packageNames)
-        throws IOException {
+    public static Builder scanClassPath(final String... packageNames) throws IOException {
 
         final ClassLoader loader = Thread.currentThread().getContextClassLoader();
 
@@ -213,15 +397,13 @@ public final class AnnotationDetector implements Builder, Cursor {
      * Only scan Class Files in the specified packages. If nothing is specified, all classes
      * on the class path are scanned.
      */
-    public static Builder scanClassPath(ClassLoader loader, final String... packageNames)
-        throws IOException {
+    public static Builder scanClassPath(ClassLoader loader, final String... packageNames) throws IOException {
 
         final Set<File> files = new HashSet<File>();
         final String[] pkgNameFilter;
         if (packageNames.length == 0) {
             pkgNameFilter = null;
-            final String[] fileNames = System.getProperty("java.class.path")
-                .split(File.pathSeparator);
+            final String[] fileNames = System.getProperty("java.class.path").split(File.pathSeparator);
             for (int i = 0; i < fileNames.length; ++i) {
                 files.add(new File(fileNames[i]));
             }
@@ -318,7 +500,6 @@ public final class AnnotationDetector implements Builder, Cursor {
             public void report(Cursor cursor) {
                 list.add(reporter.report(cursor));
             }
-
         };
         detect(cfIterator);
         return list;
@@ -370,14 +551,12 @@ public final class AnnotationDetector implements Builder, Cursor {
     @Override
     public Field getField() {
         if (elementType != ElementType.FIELD) {
-            throw new IllegalStateException(
-                "Illegal to call getField() when " + elementType + " is reported");
+            throw new IllegalStateException("Illegal to call getField() when " + elementType + " is reported");
         }
         try {
             return getType().getDeclaredField(memberName);
         } catch (NoSuchFieldException ex) {
-            throw assertionError(
-                "Cannot find Field '%s' for type %s", memberName, getTypeName());
+            throw assertionError("Cannot find Field '%s' for type %s", memberName, getTypeName());
         }
     }
 
@@ -387,15 +566,13 @@ public final class AnnotationDetector implements Builder, Cursor {
     @Override
     public Constructor getConstructor() {
         if (elementType != ElementType.CONSTRUCTOR) {
-            throw new IllegalStateException(
-                "Illegal to call getMethod() when " + elementType + " is reported");
+            throw new IllegalStateException("Illegal to call getMethod() when " + elementType + " is reported");
         }
         try {
             final Class<?>[] parameterTypes = parseArguments(methodDescriptor);
             return getType().getConstructor(parameterTypes);
         } catch (NoSuchMethodException ex) {
-            throw assertionError(
-                "Cannot find Contructor '%s(...)' for type %s", memberName, getTypeName());
+            throw assertionError("Cannot find Contructor '%s(...)' for type %s", memberName, getTypeName());
         }
     }
 
@@ -405,15 +582,13 @@ public final class AnnotationDetector implements Builder, Cursor {
     @Override
     public Method getMethod() {
         if (elementType != ElementType.METHOD) {
-            throw new IllegalStateException(
-                "Illegal to call getMethod() when " + elementType + " is reported");
+            throw new IllegalStateException("Illegal to call getMethod() when " + elementType + " is reported");
         }
         try {
             final Class<?>[] parameterTypes = parseArguments(methodDescriptor);
             return getType().getDeclaredMethod(memberName, parameterTypes);
         } catch (NoSuchMethodException ex) {
-            throw assertionError(
-                "Cannot find Method '%s(...)' for type %s", memberName, getTypeName());
+            throw assertionError("Cannot find Method '%s(...)' for type %s", memberName, getTypeName());
         }
     }
 
@@ -423,8 +598,8 @@ public final class AnnotationDetector implements Builder, Cursor {
     @Override
     public <T extends Annotation> T getAnnotation(final Class<T> annotationClass) {
         if (!annotationClass.equals(annotationType)) {
-            throw new IllegalStateException("Illegal to call getAnnotation() when " +
-                this.annotationType.getName() + " is reported");
+            throw new IllegalStateException(
+                    "Illegal to call getAnnotation() when " + this.annotationType.getName() + " is reported");
         }
         final AnnotatedElement ae;
         switch (elementType) {
@@ -445,8 +620,7 @@ public final class AnnotationDetector implements Builder, Cursor {
 
     // private
 
-    private static void addFiles(ClassLoader loader, String resourceName, Set<File> files)
-        throws IOException {
+    private static void addFiles(ClassLoader loader, String resourceName, Set<File> files) throws IOException {
 
         final Enumeration<URL> resourceEnum = loader.getResources(resourceName);
         while (resourceEnum.hasMoreElements()) {
@@ -461,7 +635,7 @@ public final class AnnotationDetector implements Builder, Cursor {
                 if (dir.isDirectory()) {
                     files.add(dir);
                 } else if (isVfs) {
-                    //Jar file via JBoss VFS protocol - strip package name
+                    // Jar file via JBoss VFS protocol - strip package name
                     String jarPath = dir.getPath();
                     final int idx = jarPath.indexOf(".jar");
                     if (idx > -1) {
@@ -476,8 +650,7 @@ public final class AnnotationDetector implements Builder, Cursor {
                 }
             } else {
                 // Resource in Jar File
-                final File jarFile =
-                    toFile(((JarURLConnection)url.openConnection()).getJarFileURL());
+                final File jarFile = toFile(((JarURLConnection) url.openConnection()).getJarFileURL());
                 if (jarFile.isFile()) {
                     files.add(jarFile);
                 } else {
@@ -524,7 +697,7 @@ public final class AnnotationDetector implements Builder, Cursor {
     }
 
     private boolean hasCafebabe(final ClassFileBuffer buffer) throws IOException {
-        return buffer.size() > 4 &&  buffer.readInt() == 0xCAFEBABE;
+        return buffer.size() > 4 && buffer.readInt() == 0xCAFEBABE;
     }
 
     /**
@@ -545,8 +718,9 @@ public final class AnnotationDetector implements Builder, Cursor {
     private void readVersion(final DataInput di) throws IOException {
         // sequence: minor version, major version (argument_index is 1-based)
         if (LOG.isLoggable(Level.FINER)) {
-            LOG.log(Level.FINER, "Java Class version {1}.{0}",
-                new Object[]{di.readUnsignedShort(), di.readUnsignedShort()});
+            LOG.log(Level.FINER, "Java Class version {1}.{0}", new Object[] {
+                di.readUnsignedShort(), di.readUnsignedShort()
+            });
         } else {
             di.skipBytes(4);
         }
@@ -566,13 +740,12 @@ public final class AnnotationDetector implements Builder, Cursor {
     /**
      * Return {@code true} if a double slot is read (in case of Double or Long constant).
      */
-    private boolean readConstantPoolEntry(final DataInput di, final int index)
-        throws IOException {
+    private boolean readConstantPoolEntry(final DataInput di, final int index) throws IOException {
 
         final int tag = di.readUnsignedByte();
         switch (tag) {
             case CP_METHOD_TYPE:
-                di.skipBytes(2);  // readUnsignedShort()
+                di.skipBytes(2); // readUnsignedShort()
                 return false;
             case CP_METHOD_HANDLE:
                 di.skipBytes(3);
@@ -599,8 +772,7 @@ public final class AnnotationDetector implements Builder, Cursor {
                 constantPool[index] = di.readUnsignedShort();
                 return false;
             default:
-                throw new ClassFormatError(
-                    "Unkown tag value for constant pool entry: " + tag);
+                throw new ClassFormatError("Unkown tag value for constant pool entry: " + tag);
         }
     }
 
@@ -627,7 +799,7 @@ public final class AnnotationDetector implements Builder, Cursor {
             readAccessFlags(di);
             memberName = resolveUtf8(di);
             // decriptor is Field type in raw format, we do not need it, so skip
-            //final String descriptor = resolveUtf8(di);
+            // final String descriptor = resolveUtf8(di);
             di.skipBytes(2);
             LOG.log(Level.FINER, "Field: {0}", memberName);
             readAttributes(di, ElementType.FIELD);
@@ -645,17 +817,15 @@ public final class AnnotationDetector implements Builder, Cursor {
         }
     }
 
-    private void readAttributes(final DataInput di, final ElementType reporterType)
-        throws IOException {
+    private void readAttributes(final DataInput di, final ElementType reporterType) throws IOException {
 
         final int count = di.readUnsignedShort();
         for (int i = 0; i < count; ++i) {
             final String name = resolveUtf8(di);
             // in bytes, use this to skip the attribute info block
             final int length = di.readInt();
-            if (elementTypes.contains(reporterType) &&
-                ("RuntimeVisibleAnnotations".equals(name) ||
-                "RuntimeInvisibleAnnotations".equals(name))) {
+            if (elementTypes.contains(reporterType)
+                    && ("RuntimeVisibleAnnotations".equals(name) || "RuntimeInvisibleAnnotations".equals(name))) {
                 LOG.log(Level.FINEST, "Attribute: {0}", name);
                 readAnnotations(di, reporterType);
             } else {
@@ -665,8 +835,7 @@ public final class AnnotationDetector implements Builder, Cursor {
         }
     }
 
-    private void readAnnotations(final DataInput di, final ElementType elementType)
-        throws IOException {
+    private void readAnnotations(final DataInput di, final ElementType elementType) throws IOException {
 
         // the number of Runtime(In)VisibleAnnotations
         final int count = di.readUnsignedShort();
@@ -677,9 +846,9 @@ public final class AnnotationDetector implements Builder, Cursor {
                 LOG.log(Level.FINER, "Annotation: {0} (ignored)", rawTypeName);
                 continue;
             }
-            LOG.log(Level.FINE,
-                "Annotation: ''{0}'' on type ''{1}'', member ''{2}'' (reported)",
-                new Object[]{annotationType.getName(), getTypeName(), getMemberName()});
+            LOG.log(Level.FINE, "Annotation: ''{0}'' on type ''{1}'', member ''{2}'' (reported)", new Object[] {
+                annotationType.getName(), getTypeName(), getMemberName()
+            });
             this.elementType = elementType;
             reporter.report(this);
         }
@@ -730,8 +899,7 @@ public final class AnnotationDetector implements Builder, Cursor {
                 }
                 break;
             default:
-                throw new ClassFormatError("Not a valid annotation element type tag: 0x" +
-                    Integer.toHexString(tag));
+                throw new ClassFormatError("Not a valid annotation element type tag: 0x" + Integer.toHexString(tag));
         }
     }
 
@@ -744,9 +912,9 @@ public final class AnnotationDetector implements Builder, Cursor {
         final Object value = constantPool[index];
         final String s;
         if (value instanceof Integer) {
-            s = (String)constantPool[(Integer)value];
+            s = (String) constantPool[(Integer) value];
         } else {
-            s = (String)value;
+            s = (String) value;
         }
         return s;
     }
@@ -757,7 +925,7 @@ public final class AnnotationDetector implements Builder, Cursor {
      */
     // incorrect detection of dereferencing possible null pointer
     // TODO: https://github.com/checkstyle/checkstyle/issues/14 fixed in 5.8?
-    @SuppressWarnings({"null", "javancss" })
+    @SuppressWarnings({"null", "javancss"})
     private Class<?>[] parseArguments(final String descriptor) {
         final int n = descriptor.length();
         // "minimal" descriptor: no arguments: "()V", first character is always '('
@@ -838,8 +1006,7 @@ public final class AnnotationDetector implements Builder, Cursor {
         try {
             return Class.forName(typeName, false, loader);
         } catch (ClassNotFoundException ex) {
-            throw assertionError(
-                "Cannot load type '%s', scanned file not on class path? (%s)", typeName, ex);
+            throw assertionError("Cannot load type '%s', scanned file not on class path? (%s)", typeName, ex);
         }
     }
 
@@ -847,12 +1014,10 @@ public final class AnnotationDetector implements Builder, Cursor {
      * The method descriptor must always be parseable, so if not an AssertionError is thrown.
      */
     private static AssertionError unparseable(final String descriptor, final String cause) {
-        return assertionError(
-            "Unparseble method descriptor: '%s' (cause: %s)", descriptor, cause);
+        return assertionError("Unparseble method descriptor: '%s' (cause: %s)", descriptor, cause);
     }
 
     private static AssertionError assertionError(String message, Object... args) {
         return new AssertionError(String.format(message, args));
     }
-
 }

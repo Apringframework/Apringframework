@@ -20,7 +20,7 @@
  * limitations under the License.
  */
 /**
- * This library can be used to scan (part of) the class path for annotated classes, 
+ * This library can be used to scan (part of) the class path for annotated classes,
  * methods or instance variables.
  * <p>
  * For documentation, see <a href="https://github.com/rmuller/infomas-asl">Github site</a>.
@@ -30,9 +30,9 @@
  * <li><a href="http://www.jboss.org/javassist">javassist</a>
  * <li><a href="http://asm.ow2.org">asm</a>
  * <li><a href="http://jakarta.apache.org/bcel">Apache BCEL</a>, considered outdated
- * <li><a href="http://www.freeinternals.org/product/javaclassfilelibrary">jCFL</a>, 
+ * <li><a href="http://www.freeinternals.org/product/javaclassfilelibrary">jCFL</a>,
  * free but not open source
- * <li><a href="http://java.decompiler.free.fr">Java decompiler</a>, also works on Linux, 
+ * <li><a href="http://java.decompiler.free.fr">Java decompiler</a>, also works on Linux,
  * JAD does not!
  * </ul>
  */

@@ -202,102 +202,94 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package eu.infomas.annotation;
+package org.apringframework.beans.instantiator.impl;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.apringframework.beans.collectors.BeanCollector;
+import org.apringframework.beans.collectors.impl.ProvidedBeanCollector;
+import org.apringframework.beans.instantiator.BeanInstantiationContext;
+import org.apringframework.beans.instantiator.BeanInstantiator;
+import org.apringframework.beans.utils.MethodInfo;
 
-/**
- * {@code ClassFileIterator} is used to iterate over all Java ClassFile files available within
- * a specific context.
- * <p>
- * For every Java ClassFile ({@code .class}) an {@link InputStream} is returned.
- *
- * @author <a href="mailto:rmuller@xiam.nl">Ronald K. Muller</a>
- * @since annotation-detector 3.0.0
+/***
+ * Instantiator for beans collected from {@link org.apringframework.beans.collectors.impl.ProvidedBeanCollector}
+ * @author Singlerr
  */
-final class ClassFileIterator {
+public final class ProvidedBeanInstantiator implements BeanInstantiator {
 
-    private final FileIterator fileIter;
-    private final String[] pkgNameFilter;
+    private final Map<Class<?>, Object> instantiatedDeclaringClasses;
 
-    private ZipFileIterator zipIter;
-    private boolean isFile;
+    private final BeanInstantiationContext context;
 
-    /**
-     * Create a new {@code ClassFileIterator} returning all Java ClassFile files available
-     * from the specified files and/or directories, including sub directories.
-     * <p>
-     * If the (optional) package filter is defined, only class files staring with one of the
-     * defined package names are returned.
-     * NOTE: package names must be defined in the native format (using '/' instead of '.').
-     */
-    ClassFileIterator(final File[] filesOrDirectories, final String[] pkgNameFilter) {
-        this.fileIter = new FileIterator(filesOrDirectories);
-        this.pkgNameFilter = pkgNameFilter;
+    private final ProvidedBeanCollector beanCollector;
+
+    private Object instantiatedBeanClass;
+
+    public ProvidedBeanInstantiator(BeanInstantiationContext context, ProvidedBeanCollector beanCollector) {
+        this.context = context;
+        this.beanCollector = beanCollector;
+        instantiatedDeclaringClasses = new HashMap<>();
     }
 
-    /**
-     * Return the name of the Java ClassFile returned from the last call to {@link #next()}.
-     * The name is either the path name of a file or the name of an ZIP/JAR file entry.
+    /***
+     * Instantiate beans
+     * @return instantiated bean objects, key is class of bean, value is bean object
      */
-    String getName() {
-        // Both getPath() and getName() are very light weight method calls
-        return zipIter == null
-                ? fileIter.getFile().getPath()
-                : zipIter.getEntry().getName();
-    }
+    @Override
+    public Map<Class<?>, Object> create() {
 
-    /**
-     * Return {@code true} if the current {@link InputStream} is reading from a plain
-     * {@link File}.
-     * Return {@code false} if the current {@link InputStream} is reading from a
-     * ZIP File Entry.
-     */
-    boolean isFile() {
-        return isFile;
-    }
-
-    /**
-     * Return the next Java ClassFile as an {@code InputStream}.
-     * <p>
-     * NOTICE: Client code MUST close the returned {@code InputStream}!
-     */
-    InputStream next(final FilenameFilter filter) throws IOException {
-        while (true) {
-            if (zipIter == null) {
-                final File file = fileIter.next();
-                if (file == null) {
-                    return null;
-                } else {
-                    final String path = file.getPath();
-                    if (path.endsWith(".class")
-                            && (filter == null || filter.accept(fileIter.getRootFile(), fileIter.relativize(path)))) {
-                        isFile = true;
-                        return new FileInputStream(file);
-                    } else if (fileIter.isRootFile() && endsWithIgnoreCase(path, ".jar")) {
-                        zipIter = new ZipFileIterator(file, pkgNameFilter);
-                    } // else just ignore
+        HashMap<Class<?>, Object> generatedBeans = new HashMap<>();
+        for (MethodInfo beanModel : beanCollector.getBeanModels()) {
+            List<Object> params = validateMethod(beanModel.getMethod());
+            // Validated
+            if (params.size() == beanModel.getMethod().getParameterCount()) {
+                try {
+                    if (instantiatedDeclaringClasses.containsKey(beanModel.getDeclaringClass())) {
+                        Object bean = beanModel
+                                .getMethod()
+                                .invoke(
+                                        instantiatedDeclaringClasses.get(beanModel.getDeclaringClass()),
+                                        params.toArray(new Object[0]));
+                        generatedBeans.put(bean.getClass(), bean);
+                    } else {
+                        Object declaringObject =
+                                beanModel.getDeclaringClass().getConstructor().newInstance();
+                        instantiatedDeclaringClasses.put(beanModel.getDeclaringClass(), declaringObject);
+                    }
+                } catch (NoSuchMethodException | IllegalAccessException | InstantiationException ex) {
+                    throw new IllegalStateException("Error while generating bean class", ex);
+                } catch (InvocationTargetException ex) {
+                    throw new RuntimeException(ex);
                 }
             } else {
-                final InputStream is = zipIter.next(filter);
-                if (is == null) {
-                    zipIter = null;
-                } else {
-                    isFile = false;
-                    return is;
-                }
+                // Not validated, put null object to notify that update again later all beans generated
+                generatedBeans.put(beanModel.getMethod().getReturnType(), null);
             }
         }
+        return generatedBeans;
     }
 
-    // private
+    /***
+     * Check if this bean instantiator can create beans collected from {@link BeanCollector}
+     * @param beanCollector to check
+     * @return whether this bean instantiator support the bean collector
+     */
+    @Override
+    public boolean support(BeanCollector<?> beanCollector) {
+        return beanCollector instanceof ProvidedBeanCollector;
+    }
 
-    private static boolean endsWithIgnoreCase(final String value, final String suffix) {
-        final int n = suffix.length();
-        return value.regionMatches(true, value.length() - n, suffix, 0, n);
+    private List<Object> validateMethod(Method method) {
+        List<Object> params = new ArrayList<>();
+        for (Class<?> parameterType : method.getParameterTypes()) {
+            Object cachedBean = context.getBean(parameterType);
+            if (cachedBean != null) params.add(cachedBean);
+        }
+        return params;
     }
 }
