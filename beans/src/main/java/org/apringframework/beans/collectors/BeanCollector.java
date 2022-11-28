@@ -207,6 +207,7 @@ package org.apringframework.beans.collectors;
 import java.util.List;
 
 /***
+ * {@inheritDoc}
  * A collector that collects beans.
  * No matter how its implementations collect beans, everything is ok when it returns bean classes, not object.
  * Bean can be several types, such as one provided by method, and another annotated by special annotation.

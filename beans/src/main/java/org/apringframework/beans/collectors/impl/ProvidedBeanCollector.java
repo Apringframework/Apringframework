@@ -204,8 +204,6 @@
 */
 package org.apringframework.beans.collectors.impl;
 
-// TODO("bean collector that collects bean classes which have @Bean method")
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;

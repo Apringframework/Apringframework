@@ -202,41 +202,24 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package org.apringframework.beans.instantiator;
+package org.apringframework.beans.utils;
 
-import java.util.Map;
-import org.apringframework.beans.collectors.BeanCollector;
+public final class Pair<A, B> {
 
-/***
- * Generate bean object using {@link org.apringframework.beans.collectors.BeanCollector}
- * Implement this interface to provide various bean generator
- * @author Singlerr
- */
-public interface BeanInstantiator {
+    private A first;
 
-    /***
-     * Set bean instantiation context
-     * @param context context
-     */
-    void setContext(BeanInstantiationContext context);
+    private B second;
 
-    /***
-     * Create bean for type
-     * @param clazz bean type
-     * @return bean object
-     */
-    Object create(Class<?> clazz);
+    public Pair(A first, B second) {
+        this.first = first;
+        this.second = second;
+    }
 
-    /***
-     * Instantiate beans
-     * @return instantiated bean objects, key is class of bean, value is bean object
-     */
-    Map<Class<?>, Object> create();
+    public A getFirst() {
+        return first;
+    }
 
-    /***
-     * Check if this bean instantiator can create beans collected from {@link BeanCollector}
-     * @param beanCollector to check
-     * @return whether this bean instantiator support the bean collector
-     */
-    boolean support(BeanCollector<?> beanCollector);
+    public B getSecond() {
+        return second;
+    }
 }

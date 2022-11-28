@@ -210,11 +210,14 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.apringframework.beans.collectors.BeanCollector;
 import org.apringframework.beans.collectors.impl.GroupBeanCollector;
 import org.apringframework.beans.factories.HierarchicalBeanFactory;
+import org.apringframework.beans.instantiator.BeanInstantiationContext;
 import org.apringframework.beans.instantiator.BeanInstantiator;
 import org.apringframework.beans.utils.BeanModel;
+import org.apringframework.beans.utils.Pair;
 import org.springframework.utilities.ObjectUtils;
 import org.springframework.utilities.annotations.Nullable;
 
@@ -230,7 +233,7 @@ public class DefaultBeanFactory implements HierarchicalBeanFactory {
 
     private final HashMap<Class<?>, Object> beanCache;
 
-    private final Deque<BeanModel> pendingBeanModels;
+    private final Deque<Pair<BeanInstantiator, BeanModel>> pendingBeanModels;
 
     public DefaultBeanFactory(BeanCollector<?> beanCollector, List<BeanInstantiator> instantiators) {
         this.beanCache = new HashMap<>();
@@ -245,7 +248,12 @@ public class DefaultBeanFactory implements HierarchicalBeanFactory {
                         .findAny()
                         .orElseThrow(() -> new IllegalStateException("Cannot find suitable bean instantiator for "
                                 + collector.getClass().getName()));
-                beanCache.putAll(instantiator.create());
+                Map<Class<?>, Object> generated = instantiator.create();
+                for (Map.Entry<Class<?>, Object> entry : generated.entrySet()) {
+                    if (entry.getValue() == null) {
+                        pendingBeanModels.push(new Pair<>(instantiator, new BeanModel(entry.getClass())));
+                    } else beanCache.put(entry.getClass(), entry.getValue());
+                }
             }
         } else {
             BeanInstantiator instantiator = instantiators.stream()
@@ -253,7 +261,25 @@ public class DefaultBeanFactory implements HierarchicalBeanFactory {
                     .findAny()
                     .orElseThrow(() -> new IllegalStateException("Cannot find suitable bean instantiator for "
                             + beanCollector.getClass().getName()));
-            beanCache.putAll(instantiator.create());
+            Map<Class<?>, Object> generated = instantiator.create();
+            for (Map.Entry<Class<?>, Object> entry : generated.entrySet()) {
+                if (entry.getValue() == null) {
+                    pendingBeanModels.push(new Pair<>(instantiator, new BeanModel(entry.getClass())));
+                } else beanCache.put(entry.getClass(), entry.getValue());
+            }
+        }
+
+        // Generate beans in pending bean models for new context
+        for (Pair<BeanInstantiator, BeanModel> pendingBeanModel : pendingBeanModels) {
+            // Set new context to apply bean cache changes above
+            pendingBeanModel.getFirst().setContext(new BeanInstantiationContext(beanCache));
+            Object bean = pendingBeanModel
+                    .getFirst()
+                    .create(pendingBeanModel.getSecond().getBeanClass());
+            if (bean == null)
+                throw new IllegalStateException("Cannot instantiate bean "
+                        + pendingBeanModel.getSecond().getBeanClass());
+            beanCache.put(pendingBeanModel.getSecond().getBeanClass(), bean);
         }
     }
 

@@ -224,7 +224,7 @@ public final class ProvidedBeanInstantiator implements BeanInstantiator {
 
     private final Map<Class<?>, Object> instantiatedDeclaringClasses;
 
-    private final BeanInstantiationContext context;
+    private BeanInstantiationContext context;
 
     private final ProvidedBeanCollector beanCollector;
 
@@ -234,6 +234,59 @@ public final class ProvidedBeanInstantiator implements BeanInstantiator {
         this.context = context;
         this.beanCollector = beanCollector;
         instantiatedDeclaringClasses = new HashMap<>();
+    }
+
+    /***
+     * Set bean instantiation context
+     * @param context context
+     */
+    @Override
+    public void setContext(BeanInstantiationContext context) {
+        this.context = context;
+    }
+
+    /***
+     * Create bean for type
+     * @param clazz bean type
+     * @return bean object
+     */
+    @Override
+    public Object create(Class<?> clazz) {
+        for (MethodInfo beanModel : beanCollector.getBeanModels()) {
+            List<Object> params = validateMethod(beanModel.getMethod());
+            // Validated
+            if (params.size() == beanModel.getMethod().getParameterCount()) {
+                try {
+                    if (instantiatedDeclaringClasses.containsKey(beanModel.getDeclaringClass())) {
+                        Object bean = beanModel
+                                .getMethod()
+                                .invoke(
+                                        instantiatedDeclaringClasses.get(beanModel.getDeclaringClass()),
+                                        params.toArray(new Object[0]));
+                        return bean;
+                    } else {
+                        Object declaringObject =
+                                beanModel.getDeclaringClass().getConstructor().newInstance();
+                        instantiatedDeclaringClasses.put(beanModel.getDeclaringClass(), declaringObject);
+
+                        Object bean = beanModel
+                                .getMethod()
+                                .invoke(
+                                        instantiatedDeclaringClasses.get(beanModel.getDeclaringClass()),
+                                        params.toArray(new Object[0]));
+                        return bean;
+                    }
+                } catch (NoSuchMethodException | IllegalAccessException | InstantiationException ex) {
+                    throw new IllegalStateException("Error while generating bean class", ex);
+                } catch (InvocationTargetException ex) {
+                    throw new RuntimeException(ex);
+                }
+            } else {
+                // Not validated, return null
+                return null;
+            }
+        }
+        return null;
     }
 
     /***
@@ -260,6 +313,13 @@ public final class ProvidedBeanInstantiator implements BeanInstantiator {
                         Object declaringObject =
                                 beanModel.getDeclaringClass().getConstructor().newInstance();
                         instantiatedDeclaringClasses.put(beanModel.getDeclaringClass(), declaringObject);
+
+                        Object bean = beanModel
+                                .getMethod()
+                                .invoke(
+                                        instantiatedDeclaringClasses.get(beanModel.getDeclaringClass()),
+                                        params.toArray(new Object[0]));
+                        generatedBeans.put(bean.getClass(), bean);
                     }
                 } catch (NoSuchMethodException | IllegalAccessException | InstantiationException ex) {
                     throw new IllegalStateException("Error while generating bean class", ex);
